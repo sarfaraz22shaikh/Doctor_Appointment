@@ -4,20 +4,27 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import com.example.doctor_appointment.Fragments.PatientAppointmentSection;
+import com.example.doctor_appointment.Fragments.PatientHomeSection;
+import com.example.doctor_appointment.Fragments.PatientProfileSection;
 import com.example.doctor_appointment.Models.PatientModel;
 import com.example.doctor_appointment.R;
 import com.example.doctor_appointment.Repository.PatientRepository;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class PatientDashboard extends AppCompatActivity {
     private PatientRepository patientRepository;
-
+    private FrameLayout frameLayout;
+    private TabLayout tabLayout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +35,43 @@ public class PatientDashboard extends AppCompatActivity {
             loadPatientData(currentUser.getUid());
         }
 
+        initialize_views();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, new PatientHomeSection())
+                .addToBackStack(null).commit();
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment fragment = null;
+                switch (tab.getPosition()) {
+                    case 0:
+                        fragment = new PatientHomeSection();
+                        break;
+                    case 1:
+                        fragment = new PatientAppointmentSection();
+                        break;
+                    case 2:
+                        fragment = new PatientProfileSection();
+                        break;
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout1, fragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+    private void initialize_views(){
+        frameLayout = findViewById(R.id.framelayout1);
+        tabLayout = findViewById(R.id.tablayout);
     }
     private void loadPatientData(String userId) {
         Log.d("PatientDataDebug", "Fetching patient data for userId: " + userId);
@@ -53,7 +97,7 @@ public class PatientDashboard extends AppCompatActivity {
                             .setMessage("Your profile is incomplete. Please complete it to continue using the app properly.")
                             .setCancelable(false)
                             .setPositiveButton("Complete Now", (dialog, which) -> {
-                                Intent intent = new Intent(PatientDashboard.this, PatientProfile.class);
+                                Intent intent = new Intent(PatientDashboard.this, PatientEditProfile.class);
                                 startActivity(intent);
                                 // Close the dashboard after redirect
                             })
@@ -75,5 +119,4 @@ public class PatientDashboard extends AppCompatActivity {
             }
         });
     }
-
 }

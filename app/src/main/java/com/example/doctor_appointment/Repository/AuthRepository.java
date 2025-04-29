@@ -123,7 +123,12 @@ public class AuthRepository extends AppCompatActivity {
         user.put("mobile", mobile);
         user.put("gender", gender);
         user.put("role", "patient");
-        user.put("profileCompleted","false");
+        user.put("profileCompleted",false);
+        user.put("bloodGroup",null);
+        user.put("location",null);
+        user.put("dob",null);
+        user.put("profileImageUrl","");
+
 
         db.collection("Patients").document(userId).set(user)
                 .addOnSuccessListener(aVoid -> userLiveData.setValue(auth.getCurrentUser()))

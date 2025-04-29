@@ -26,8 +26,7 @@
         <activity android:name=".Activites.RegisterActivity"/>
         <activity android:name=".Activites.PatientDashboard"/>
         <activity android:name=".Activites.DoctorDashboard"/>
-        <activity android:name=".Activites.PatientProfile"/>
-        <activity android:name=".Activites.DoctorProfile"/>
+        <activity android:name=".Activites.PatientEditProfile"/>
     </application>
 
 </manifest>

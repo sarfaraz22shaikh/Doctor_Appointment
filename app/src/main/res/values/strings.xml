@@ -13,6 +13,12 @@
         <item>मराठी</item>
         <item>हिंदी</item>
     </string-array>
+    <string-array name="gender_array">
+        <item>Select Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
     <string-array name="max_person_options">
         <item>10</item>
         <item>20</item>
@@ -20,7 +26,17 @@
         <item>40</item>
         <item>50</item>
     </string-array>
-
+    <string-array name="blood_groups">
+        <item>Select Blood Group</item>
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+    </string-array>
     <string name="doctor">Doctor</string>
     <string name="Patient">Patient</string>
     <string name="greeting_patient">Hello Prasad</string>
